@@ -20,6 +20,7 @@ mysqli_query($conn, "CREATE TABLE log (".
 "event_data_complex VARCHAR(32) DEFAULT NULL,".
 "client_time TIMESTAMP NOT NULL,".
 "server_time TIMESTAMP NOT NULL DEFAULT CURRENT TIMESTAMP,".
+"req_id INT(64) NOT NULL DEFAULT 0,"
 "http_user_agent VARCHAR(256) DEFAULT NULL"
 ";");
 

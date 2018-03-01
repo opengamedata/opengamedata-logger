@@ -7,11 +7,13 @@ $conn = mysqli_connect($servername, $username, $password, $db);
 if(!$conn) die("Connection failed: " . mysqli_connect_error());
 
 //per dump
-if(isset($_GET["app_id"]))                $app_id                = mysqli_real_escape_string($conn,$_GET["app_id"]);                       else return;
-if(isset($_GET["app_version"]))           $app_version           = filter_var($_GET["app_version"],           FILTER_SANITIZE_NUMBER_INT); else return;
-if(isset($_GET["session_id"]))            $session_id            = filter_var($_GET["session_id"],            FILTER_SANITIZE_NUMBER_INT); else return;
-if(isset($_GET["persistent_session_id"])) $persistent_session_id = filter_var($_GET["persistent_session_id"], FILTER_SANITIZE_NUMBER_INT); else return;
+if(isset($_REQUEST["app_id"]))                $app_id                = mysqli_real_escape_string($conn,$_REQUEST["app_id"]);                       else return;
+if(isset($_REQUEST["app_version"]))           $app_version           = filter_var($_REQUEST["app_version"],           FILTER_SANITIZE_NUMBER_INT); else return;
+if(isset($_REQUEST["session_id"]))            $session_id            = filter_var($_REQUEST["session_id"],            FILTER_SANITIZE_NUMBER_INT); else return;
+if(isset($_REQUEST["persistent_session_id"])) $persistent_session_id = filter_var($_REQUEST["persistent_session_id"], FILTER_SANITIZE_NUMBER_INT); else return;
+if(isset($_REQUEST["req_id"]))                $req_id                = filter_var($_REQUEST["req_id"], FILTER_SANITIZE_NUMBER_INT); else return;
 $http_user_agent = mysqli_real_escape_string($conn,$_SERVER["HTTP_USER_AGENT"]);
+
 
 $query = "INSERT INTO log (".
   "app_id,".
@@ -26,6 +28,7 @@ $query = "INSERT INTO log (".
   "event_data_complex,".
   "client_time,".
   "server_time,".
+  "req_id,".
   "http_user_agent".
   ") VALUES";
 
@@ -64,6 +67,7 @@ for($i = 0; $i < $n_rows; $i++)
     (!is_null($event_data_complex) ? "\"".$event_data_complex."\"," : "NULL,").
     "\"".$client_time."\",".
     "CURRENT_TIMESTAMP,".
+    "\"".$req_id."\",".
     "\"".$http_user_agent."\"".
     ")";
   if($i < $n_rows-1) $query .= ",";
