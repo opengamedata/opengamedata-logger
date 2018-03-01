@@ -1,0 +1,8 @@
+.DS_Store
+.gitignore
+.gitmodules
+.git
+makefile
+README.md
+config.php
+rsync-exclude
