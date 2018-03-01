@@ -29,6 +29,7 @@ $query = "INSERT INTO log (".
   "client_time,".
   "server_time,".
   "req_id,".
+  "session_n,".
   "http_user_agent".
   ") VALUES";
 
@@ -52,6 +53,7 @@ for($i = 0; $i < $n_rows; $i++)
   if(isset($datum->event_data_simple))  $event_data_simple  = filter_var($datum->event_data_simple, FILTER_SANITIZE_NUMBER_INT);
   if(isset($datum->event_data_complex)) $event_data_complex = mysqli_real_escape_string($conn,$datum->event_data_complex);
   if(isset($datum->client_time))        $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
+  if(isset($datum->session_n))          $session_n          = filter_var($datum->session_n, FILTER_SANITIZE_NUMBER_INT);
 
   $query .=
     "(".
@@ -68,6 +70,7 @@ for($i = 0; $i < $n_rows; $i++)
     "\"".$client_time."\",".
     "CURRENT_TIMESTAMP,".
     "\"".$req_id."\",".
+    "\"".$session_n."\",".
     "\"".$http_user_agent."\"".
     ")";
   if($i < $n_rows-1) $query .= ",";

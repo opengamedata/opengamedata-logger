@@ -21,6 +21,7 @@ $query = "CREATE TABLE log (".
 "client_time TIMESTAMP NOT NULL, ".
 "server_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, ".
 "req_id INT(64) NOT NULL DEFAULT 0, ".
+"session_n INT(64) NOT NULL DEFAULT 0, ".
 "http_user_agent TEXT DEFAULT NULL ".
 ");";
 
