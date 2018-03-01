@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Headers: Origin, Authorization, X-Requested-With, Content-Type, Accept");
 header("Access-Control-Allow-Origin: *");
 
 include('config.php');
@@ -13,7 +14,6 @@ if(isset($_REQUEST["session_id"]))            $session_id            = filter_va
 if(isset($_REQUEST["persistent_session_id"])) $persistent_session_id = filter_var($_REQUEST["persistent_session_id"], FILTER_SANITIZE_NUMBER_INT); else return;
 if(isset($_REQUEST["req_id"]))                $req_id                = filter_var($_REQUEST["req_id"], FILTER_SANITIZE_NUMBER_INT); else return;
 $http_user_agent = mysqli_real_escape_string($conn,$_SERVER["HTTP_USER_AGENT"]);
-
 
 $query = "INSERT INTO log (".
   "app_id,".
@@ -43,15 +43,15 @@ for($i = 0; $i < $n_rows; $i++)
   $event_custom = 0;
   $event_data_simple = 0;
   $event_data_complex = NULL;
-  $client_time = date();
+  $client_time = date("M d Y H:i:s");
 
-  if(isset($datum["level"]))              $level              = filter_var($datum["level"],             FILTER_SANITIZE_NUMBER_INT);
-  if(isset($datum["event"]))              $event              = filter_var($datum["event"],             FILTER_SANITIZE_NUMBER_INT);
+  if(isset($datum->level))              $level              = filter_var($datum->level,             FILTER_SANITIZE_NUMBER_INT);
+  if(isset($datum->event))              $event              = mysqli_real_escape_string($conn,$datum->event);
   //optional
-  if(isset($datum["event_custom"]))       $event_custom       = filter_var($datum["event_custom"],      FILTER_SANITIZE_NUMBER_INT);
-  if(isset($datum["event_data_simple"]))  $event_data_simple  = filter_var($datum["event_data_simple"], FILTER_SANITIZE_NUMBER_INT);
-  if(isset($datum["event_data_complex"])) $event_data_complex = mysqli_real_escape_string($conn,$datum["event_data_complex"]);
-  if(isset($datum["client_time"]))        $client_time        = mysqli_real_escape_string($conn,$datum["client_time"]);
+  if(isset($datum->event_custom))       $event_custom       = filter_var($datum->event_custom,      FILTER_SANITIZE_NUMBER_INT);
+  if(isset($datum->event_data_simple))  $event_data_simple  = filter_var($datum->event_data_simple, FILTER_SANITIZE_NUMBER_INT);
+  if(isset($datum->event_data_complex)) $event_data_complex = mysqli_real_escape_string($conn,$datum->event_data_complex);
+  if(isset($datum->client_time))        $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
 
   $query .=
     "(".
@@ -76,5 +76,4 @@ for($i = 0; $i < $n_rows; $i++)
 if($n_rows > 0) mysqli_query($conn,$query);
 
 echo $query;
-echo "SUCCESS";
 ?>
