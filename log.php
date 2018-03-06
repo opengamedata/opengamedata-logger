@@ -87,5 +87,4 @@ for($i = 0; $i < $n_rows; $i++)
 
 if($n_rows > 0) mysqli_query($conn,$query);
 
-echo $query;
 ?>
