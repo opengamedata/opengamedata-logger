@@ -7,7 +7,11 @@ include('config.php');
 $conn = mysqli_connect($servername, $username, $password, $db);
 if(!$conn) die("Connection failed: " . mysqli_connect_error());
 
-echo "id,app_id,app_version,session_id,persistent_session_id,level,event,event_data_simple,amplitude_left,wavelength_left,offset_left,amplitude_right,wavelength_right,offset_right,begin_closeness,end_closeness,slider,wave,begin_val,end_val,min_val,max_val,correct_val,question,answered,answer,client_time,server_time,req_id,session_n,http_user_agent\r\n";
+$newline = "<br />\n";
+//$newline = "\n";
+//$newline = "\r\n";
+
+echo "id,app_id,app_version,session_id,persistent_session_id,level,event,event_data_simple,amplitude_left,wavelength_left,offset_left,amplitude_right,wavelength_right,offset_right,begin_closeness,end_closeness,slider,wave,begin_val,end_val,min_val,max_val,correct_val,question,answered,answer,client_time,server_time,req_id,session_n,http_user_agent".$newline;
 
 $result = mysqli_query($conn,"SELECT * FROM log WHERE app_id_fast = 'WAVES';");
 while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
@@ -176,14 +180,13 @@ while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
     $line .= $data->answer.","; //answer
   }
 
-  $line .= $row["event_data_complex"].",";
   $line .= $row["client_time"].".".$row["client_time_ms"].",";
   $line .= $row["server_time"].",";
   $line .= $row["req_id"].",";
   $line .= $row["session_n"].",";
-  $line .= $row["http_user_agent"].",";
+  $line .= "\"".$row["http_user_agent"]."\",";
 
-  echo $line."\r\n";
+  echo $line.$newline;
 }
 mysqli_free_result($result);
 
