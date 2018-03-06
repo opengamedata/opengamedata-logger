@@ -54,10 +54,13 @@ for($i = 0; $i < $n_rows; $i++)
   if(isset($datum->event_custom))       $event_custom       = filter_var($datum->event_custom,      FILTER_SANITIZE_NUMBER_INT);
   if(isset($datum->event_data_simple))  $event_data_simple  = filter_var($datum->event_data_simple, FILTER_SANITIZE_NUMBER_INT);
   if(isset($datum->event_data_complex)) $event_data_complex = mysqli_real_escape_string($conn,$datum->event_data_complex);
-  if(isset($datum->client_time))        $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
-  $ct_len = strlen($client_time);
-  $ct_dot = strrpos($client_time,".");
-  if(isset($datum->client_time_ms))     $client_time_ms     = substr($client_time,$ct_dot+1,$ct_len-($ct_dot+1)-1);
+  if(isset($datum->client_time))
+  {
+                                        $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
+    $ct_len = strlen($client_time);
+    $ct_dot = strrpos($client_time,".");
+    $client_time_ms = substr($client_time,$ct_dot+1,($ct_len-($ct_dot+1)-1));
+  }
   if(isset($datum->session_n))          $session_n          = filter_var($datum->session_n, FILTER_SANITIZE_NUMBER_INT);
 
   $query .=
