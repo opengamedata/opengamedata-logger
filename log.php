@@ -27,6 +27,7 @@ $query = "INSERT INTO log (".
   "event_data_simple,".
   "event_data_complex,".
   "client_time,".
+  "client_time_ms,".
   "server_time,".
   "req_id,".
   "session_n,".
@@ -45,6 +46,7 @@ for($i = 0; $i < $n_rows; $i++)
   $event_data_simple = 0;
   $event_data_complex = NULL;
   $client_time = date("M d Y H:i:s");
+  $client_time_ms = 0;
 
   if(isset($datum->level))              $level              = filter_var($datum->level,             FILTER_SANITIZE_NUMBER_INT);
   if(isset($datum->event))              $event              = mysqli_real_escape_string($conn,$datum->event);
@@ -53,6 +55,7 @@ for($i = 0; $i < $n_rows; $i++)
   if(isset($datum->event_data_simple))  $event_data_simple  = filter_var($datum->event_data_simple, FILTER_SANITIZE_NUMBER_INT);
   if(isset($datum->event_data_complex)) $event_data_complex = mysqli_real_escape_string($conn,$datum->event_data_complex);
   if(isset($datum->client_time))        $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
+  if(isset($datum->client_time_ms))     $client_time_ms     = substr($client_time,strrpos($client_time,".")+1);
   if(isset($datum->session_n))          $session_n          = filter_var($datum->session_n, FILTER_SANITIZE_NUMBER_INT);
 
   $query .=
@@ -68,6 +71,7 @@ for($i = 0; $i < $n_rows; $i++)
     "\"".$event_data_simple."\",".
     (!is_null($event_data_complex) ? "\"".$event_data_complex."\"," : "NULL,").
     "\"".$client_time."\",".
+    "\"".$client_time_ms."\",".
     "CURRENT_TIMESTAMP,".
     "\"".$req_id."\",".
     "\"".$session_n."\",".

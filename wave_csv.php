@@ -177,7 +177,7 @@ while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
   }
 
   $line .= $row["event_data_complex"].",";
-  $line .= $row["client_time"].",";
+  $line .= $row["client_time"].":".$row["client_time_ms"].",";
   $line .= $row["server_time"].",";
   $line .= $row["req_id"].",";
   $line .= $row["session_n"].",";
