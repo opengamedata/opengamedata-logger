@@ -7,8 +7,8 @@ include('config.php');
 $conn = mysqli_connect($servername, $username, $password, $db);
 if(!$conn) die("Connection failed: " . mysqli_connect_error());
 
-$newline = "<br />\n";
-//$newline = "\n";
+//$newline = "<br />\n";
+$newline = "\n";
 //$newline = "\r\n";
 
 $content = "id,app_id,app_version,session_id,persistent_session_id,level,event,event_data_simple,amplitude_left,wavelength_left,offset_left,amplitude_right,wavelength_right,offset_right,begin_closeness,end_closeness,slider,wave,begin_val,end_val,min_val,max_val,correct_val,question,answered,answer,client_time,server_time,req_id,session_n,http_user_agent".$newline;
