@@ -33,7 +33,7 @@ $query = "INSERT INTO log (".
   "http_user_agent".
   ") VALUES";
 
-$data = json_decode($_POST["data"]);
+$data = json_decode(base64_decode($_POST["data"]));
 if(!is_array($data)) { $d = $data; $data = array(); array_push($data,$d); }
 $n_rows = count($data);
 for($i = 0; $i < $n_rows; $i++)
@@ -51,7 +51,7 @@ for($i = 0; $i < $n_rows; $i++)
   //optional
   if(isset($datum->event_custom))       $event_custom       = filter_var($datum->event_custom,      FILTER_SANITIZE_NUMBER_INT);
   if(isset($datum->event_data_simple))  $event_data_simple  = filter_var($datum->event_data_simple, FILTER_SANITIZE_NUMBER_INT);
-  if(isset($datum->event_data_complex)) $event_data_complex = mysqli_real_escape_string($conn,base64_decode($datum->event_data_complex));
+  if(isset($datum->event_data_complex)) $event_data_complex = mysqli_real_escape_string($conn,$datum->event_data_complex);
   if(isset($datum->client_time))        $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
   if(isset($datum->session_n))          $session_n          = filter_var($datum->session_n, FILTER_SANITIZE_NUMBER_INT);
 
