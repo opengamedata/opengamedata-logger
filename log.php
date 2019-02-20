@@ -57,9 +57,16 @@ for($i = 0; $i < $n_rows; $i++)
   if(isset($datum->client_time))
   {
                                         $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
+    // $client_time is a string like "2019-02-20 17:21:05.493Z"
     $ct_len = strlen($client_time);
     $ct_dot = strrpos($client_time,".");
-    $client_time_ms = substr($client_time,$ct_dot+1,($ct_len-($ct_dot+1)-1));
+    if ($ct_dot) {
+      // drop ".493Z" for the DATETIME, and extract 493 for separate column
+      $client_time_ms = substr($client_time, $ct_dot + 1, $ct_len - ($ct_dot + 1) - 1);
+      $client_time = substr($client_time, 0, $ct_dot);
+    } else {
+      $client_time_ms = 0;
+    }
   }
   if(isset($datum->session_n))          $session_n          = filter_var($datum->session_n, FILTER_SANITIZE_NUMBER_INT);
 
