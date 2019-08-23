@@ -9,7 +9,7 @@ if(!$conn) die("Connection failed: " . mysqli_connect_error());
 $query = "CREATE TABLE log (".
 "id INT(32) NOT NULL PRIMARY KEY AUTO_INCREMENT, ".
 "app_id VARCHAR(32) NOT NULL DEFAULT \"UNDEFINED\", ".
-"app_id_fast ENUM(\"UNDEFINED\",\"WAVES\",\"CRYSTAL\") NOT NULL DEFAULT \"UNDEFINED\", ".
+"app_id_fast ENUM(\"UNDEFINED\",\"WAVES\",\"CRYSTAL\",\"JOWILDER\",\"LAKELAND\") NOT NULL DEFAULT \"UNDEFINED\", ".
 "app_version INT(32) NOT NULL DEFAULT 0, ".
 "session_id VARCHAR(32) DEFAULT NULL, ".
 "persistent_session_id VARCHAR(32) DEFAULT NULL, ".
@@ -18,10 +18,10 @@ $query = "CREATE TABLE log (".
 "event_custom INT(32) NOT NULL DEFAULT 0, ".
 "event_data_simple INT(32) NOT NULL DEFAULT 0, ".
 "event_data_complex TEXT DEFAULT NULL, ".
-"client_time TIMESTAMP NOT NULL, ".
+"client_time TIMESTAMP NOT NULL DEFAULT 0, ".
 "client_time_ms INT(32) NOT NULL DEFAULT 0, ".
 "server_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, ".
-"remote_addr VARCHAR(32) NOT NULL, ".
+"remote_addr VARCHAR(32) DEFAULT NULL, ".
 "req_id BIGINT(64) NOT NULL DEFAULT 0, ".
 "session_n BIGINT(64) NOT NULL DEFAULT 0, ".
 "http_user_agent TEXT DEFAULT NULL ".
@@ -29,8 +29,8 @@ $query = "CREATE TABLE log (".
 
 mysqli_query($conn, $query);
 
-mysqli_query($conn,"ALTER TABLE log ADD INDEX \"app_version\" (\"app_id_fast\",\"app_version\");");
-mysqli_query($conn,"ALTER TABLE log ADD INDEX \"app_session\" (\"app_id_fast\",\"session_id\");");
+mysqli_query($conn,"ALTER TABLE log ADD INDEX `app_version` (`app_id_fast`,`app_version`);");
+mysqli_query($conn,"ALTER TABLE log ADD INDEX `app_session` (`app_id_fast`,`session_id`);");
 
 echo $query;
 ?>
