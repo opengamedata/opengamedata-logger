@@ -12,6 +12,7 @@ if(isset($_REQUEST["app_id"]))                $app_id                = mysqli_re
 if(isset($_REQUEST["app_version"]))           $app_version           = filter_var($_REQUEST["app_version"],           FILTER_SANITIZE_NUMBER_INT); else return;
 if(isset($_REQUEST["session_id"]))            $session_id            = filter_var($_REQUEST["session_id"],            FILTER_SANITIZE_NUMBER_INT); else return;
 if(isset($_REQUEST["persistent_session_id"])) $persistent_session_id = filter_var($_REQUEST["persistent_session_id"], FILTER_SANITIZE_NUMBER_INT); else return;
+if(isset($_REQUEST["player_id"])) $player_id = filter_var($_REQUEST["player_id"], FILTER_SANITIZE_NUMBER_INT); else return;
 if(isset($_REQUEST["req_id"]))                $req_id                = filter_var($_REQUEST["req_id"], FILTER_SANITIZE_NUMBER_INT); else return;
 if(isset($_SERVER["REMOTE_ADDR"]))            $remote_addr           = filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP) ? $_SERVER["REMOTE_ADDR"] : -1; else return;
 $http_user_agent = mysqli_real_escape_string($conn,$_SERVER["HTTP_USER_AGENT"]);
@@ -22,6 +23,7 @@ $query = "INSERT INTO log (".
   "app_version,".
   "session_id,".
   "persistent_session_id,".
+  "player_id,".
   "level,".
   "event,".
   "event_custom,".
@@ -58,7 +60,7 @@ for($i = 0; $i < $n_rows; $i++)
   if(isset($datum->event_data_complex)) $event_data_complex = mysqli_real_escape_string($conn,$datum->event_data_complex);
   if(isset($datum->client_time))
   {
-                                        $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
+    $client_time        = mysqli_real_escape_string($conn,$datum->client_time);
     // $client_time is a string like "2019-02-20 17:21:05.493Z"
     $ct_len = strlen($client_time);
     $ct_dot = strrpos($client_time,".");
@@ -79,6 +81,7 @@ for($i = 0; $i < $n_rows; $i++)
     "\"".$app_version."\",".
     "\"".$session_id."\",".
     "\"".$persistent_session_id."\",".
+    "\"".$player_id."\",".
     "\"".$level."\",".
     "\"".$event."\",".
     "\"".$event_custom."\",".
@@ -96,5 +99,6 @@ for($i = 0; $i < $n_rows; $i++)
 }
 
 if($n_rows > 0) mysqli_query($conn,$query);
+die($query);
 
 ?>
