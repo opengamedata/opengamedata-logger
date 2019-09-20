@@ -8,13 +8,13 @@ $conn = mysqli_connect($servername, $username, $password, $db);
 if(!$conn) die("Connection failed: " . mysqli_connect_error());
 
 //per dump
-if(isset($_REQUEST["app_id"]))                $app_id                = mysqli_real_escape_string($conn,$_REQUEST["app_id"]);                       else return;
-if(isset($_REQUEST["app_version"]))           $app_version           = filter_var($_REQUEST["app_version"],           FILTER_SANITIZE_NUMBER_INT); else return;
-if(isset($_REQUEST["session_id"]))            $session_id            = filter_var($_REQUEST["session_id"],            FILTER_SANITIZE_NUMBER_INT); else return;
-if(isset($_REQUEST["persistent_session_id"])) $persistent_session_id = filter_var($_REQUEST["persistent_session_id"], FILTER_SANITIZE_NUMBER_INT); else return;
-if(isset($_REQUEST["player_id"])) $player_id = filter_var($_REQUEST["player_id"], FILTER_SANITIZE_NUMBER_INT); else return;
-if(isset($_REQUEST["req_id"]))                $req_id                = filter_var($_REQUEST["req_id"], FILTER_SANITIZE_NUMBER_INT); else return;
-if(isset($_SERVER["REMOTE_ADDR"]))            $remote_addr           = filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP) ? $_SERVER["REMOTE_ADDR"] : -1; else return;
+if(isset($_REQUEST["app_id"]))                $app_id                = mysqli_real_escape_string($conn,$_REQUEST["app_id"]); else die("No app_id");
+if(isset($_REQUEST["app_version"]))           $app_version           = filter_var($_REQUEST["app_version"],           FILTER_SANITIZE_NUMBER_INT); else die("No app_version");
+if(isset($_REQUEST["session_id"]))            $session_id            = filter_var($_REQUEST["session_id"],            FILTER_SANITIZE_NUMBER_INT); else die("No session_id");
+if(isset($_REQUEST["persistent_session_id"])) $persistent_session_id = filter_var($_REQUEST["persistent_session_id"], FILTER_SANITIZE_NUMBER_INT); else die("No persistent_session_id");
+if(isset($_REQUEST["player_id"])) $player_id = filter_var($_REQUEST["player_id"], FILTER_SANITIZE_NUMBER_INT);
+if(isset($_REQUEST["req_id"]))                $req_id                = filter_var($_REQUEST["req_id"], FILTER_SANITIZE_NUMBER_INT); else die("No req_id");
+$remote_addr = $_SERVER["REMOTE_ADDR"];
 $http_user_agent = mysqli_real_escape_string($conn,$_SERVER["HTTP_USER_AGENT"]);
 
 $query = "INSERT INTO log (".
@@ -32,7 +32,7 @@ $query = "INSERT INTO log (".
   "client_time,".
   "client_time_ms,".
   "server_time,".
-  "remote_addr".
+  "remote_addr,".
   "req_id,".
   "session_n,".
   "http_user_agent".
