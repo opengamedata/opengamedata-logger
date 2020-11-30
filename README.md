@@ -2,7 +2,7 @@
 
 ## Usage
 
-Data is logged with the [log.php](https://github.com/opengamedata/opengamedata-logger/blob/master/log.php) file contained in this repository, which is hosted at the following URL:
+Data is logged with the [`log.php`](https://github.com/opengamedata/opengamedata-logger/blob/master/log.php) file contained in this repository, which is hosted at the following URL:
 
 `https://fielddaylab.wisc.edu/logger/log.php`
 
@@ -10,16 +10,18 @@ HTTP post requests made to the database should include this URL as the base of t
 
 Sending logs to the database can be handled by a single script which builds a request URL with the necessary information for the database, and contain functions for logging and flushing that data to the given URL.
 
-The full request URL should be formatted as follows:
+The full request string should be formatted as follows:
 
-`https://fielddaylab.wisc.edu/logger/log.php?app_id={1}&app_version={2}&session_id={3}&persistent_session_id={4}&req_id={5}&player_id={6}`
+`https://fielddaylab.wisc.edu/logger/log.php?app_id={1}&app_version={2}&session_id={3}&persistent_session_id={4}&player_id={5}&req_id={6}`
 
 1. `app_id`: identifier for given app, should match the game's name in the database
 2. `app_version`: the current version of the app
 3. `session_id`: a unique ID for the current game session
 4. `persistent_session_id`: ID for a persistent browser session, handled using cookies
-5. `req_id`: a unique identifier for a single POST request to the database
-6. `player_id`: if specified, redirects to a unique page for the given player
+5. `player_id`: if specified, redirects to a unique page for the given player
+6. `req_id`: a unique identifier for a single POST request to the database
+
+In [previous implementations](#examples), string is built within the logging object's constructor. A logging function should then take in a properly formatted dictionary, add keys for session number and client time, and add the dictionary to an accrued list of data. A flush function can then be called, which sends an HTTP request to the specified URL, and flushes logs stored into the accrued list to the database in that POST request.
 
 The data will be insterted into the database hosted at `fieldday-db.ad.education.wisc.edu`, and later relocated to be stored at `fieldday-store.ad.education.wisc.edu`.
 
@@ -38,6 +40,8 @@ Logs within the database contain the following categories:
 - `http_user_agent`: string representing the HTTP user agent
 
 When sending data to the logger, it should be formatted in a dictionary such that an `event_custom` key maps to the event category for that data. All data information should then be stored as a JSON string mapped to an `event_data_complex` key (see the `send_log` function in [Lakeland's logging implementation](https://github.com/fielddaylab/lakeland/blob/master/src/logging.js#L725)).
+
+<a name="examples"/>
 
 ## Examples
 
