@@ -1,5 +1,7 @@
 # opengamedata-logger
 
+<a name="usage"/>
+
 ## Usage
 
 Data is logged with the [`log.php`](https://github.com/opengamedata/opengamedata-logger/blob/master/log.php) file contained in this repository, which is hosted at the following URL:
@@ -25,21 +27,32 @@ In [previous implementations](#examples), string is built within the logging obj
 
 The data will be insterted into the database hosted at `fieldday-db.ad.education.wisc.edu`, and later relocated to be stored at `fieldday-store.ad.education.wisc.edu`.
 
+<a name="database categories"/>
+
 ## Database Categories
 
 Logs within the database contain the following categories:
 
-- `app_id_fast`: identifier for the given app, in this case should be the game's name
-- `event_custom`: the event category if the logged event is custom
+- `id`: unique identifier for a row
+- `app_id`: string identifying which game the event came from
+- `app_id_fast`: second version of app id, to be removed
+- `app_version`: version of the game the event came from
+- `session_id`: unique identifier for the gameplay session
+- `persistent_session_id`: unique identifier across all gameplay sessions from a single computer
+- `player_id`: a custom per-player ID, only exists if player entered ID on custom portal page
+- `event`: the type of event logged
+- `event_custom`: number corresponding to game-sepcific event type for custom events
+- `event_data_simple`: to be removed
 - `event_data_complex`: a JSON string containing all the logged information
-- `event_data_simple`: currently unused, but still needs to be present in the log
-- `persistent_session_id`: ID used for persistence, stored in a client cookie
 - `client_time`: client's timestamp resolved to the second
 - `client_time_ms`: client's timestamp in number of milliseconds
+- `server_time`: server time when the event was logged
+- `remote_addr`: IP address of player's computer
+- `req_id`: to be removed
 - `session_n`: integer that increments with each log, showing the true order of the logs
 - `http_user_agent`: string representing the HTTP user agent
 
-When sending data to the logger, it should be formatted in a dictionary such that an `event_custom` key maps to the event category for that data. All data information should then be stored as a JSON string mapped to an `event_data_complex` key (see the `send_log` function in [Lakeland's logging implementation](https://github.com/fielddaylab/lakeland/blob/master/src/logging.js#L725)).
+When sending data to the logger, the event should be formatted in a dictionary such that an `event_custom` key maps to the event category for that data. All data information should then be stored as a JSON string mapped to an `event_data_complex` key (see the `send_log` function in [Lakeland's logging implementation](https://github.com/fielddaylab/lakeland/blob/master/src/logging.js#L725)).
 
 <a name="examples"/>
 
