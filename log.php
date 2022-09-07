@@ -225,16 +225,15 @@ function generateOGDValues($datum, $conn) {
 }
 
 # Actual code
+if (isset($_REQUEST["app_id"]) && $_REQUEST["app_id"] == "AQUALAB") {$$db = "opengamedata";}
 $conn = mysqli_connect($servername, $username, $password, $db);
-if(!$conn) die("Connection failed: " . mysqli_connect_error());
+if(!$conn) {die("Connection failed: " . mysqli_connect_error());}
 
 $REQUEST_SCHEMA = "";
 
 if ($db == "logger") {
   // remove 'false' below to enable switching on AQUALAB and not others.
-  if (false && isset($_REQUEST["app_id"]) && $_REQUEST["app_id"] == "AQUALAB") { $REQUEST_SCHEMA = $MYSQL_SCHEMAS[1]; }
-  if (isset($_REQUEST["app_id"]) && $_REQUEST["app_id"] == "WAVES") { $REQUEST_SCHEMA = $MYSQL_SCHEMAS[1]; }
-  else { $REQUEST_SCHEMA = $MYSQL_SCHEMAS[0]; }
+  $REQUEST_SCHEMA = $MYSQL_SCHEMAS[0];
 }
 elseif ($db == "opengamedata") {
   $REQUEST_SCHEMA = $MYSQL_SCHEMAS[1];
