@@ -16,7 +16,7 @@ The data logger supports two formats:
 
 ## Formats
 
-### `logger` Format:
+### `logger` Format
 
 The `logger` format inserts to a database with the following columns:
 
@@ -41,7 +41,7 @@ The `logger` format inserts to a database with the following columns:
 
 ? - Columns with with prefix are optional.  
 ^ - Columns with this prefix are calculated by the server and do not need to be part of the request.  
-\* - Columns with this prefix should be included as request parameters, i.e. part of the request string. `player_id` is optional. 
+\* - Columns with this prefix should be included as request parameters, i.e. part of the request string.
 All other columns are a part of the request data, discussed further down.  
 
 The full request string should be formatted as follows:
@@ -62,7 +62,7 @@ As mentioned above, the other columns are given as the "data" element of the req
 When sending data to the logger, the event should be formatted in a dictionary such that an `event_custom` key maps to the event category for that data. All data information should then be stored as a JSON string mapped to an `event_data_complex` key (see the `send_log` function in [Lakeland's logging implementation](https://github.com/fielddaylab/lakeland/blob/master/src/logging.js#L725)).
 
 The data will be insterted into the database hosted at `fieldday-logger.ad.education.wisc.edu`, and later relocated to be stored at `fieldday-store.ad.education.wisc.edu`.
-### `opengamedata` Format:
+### `opengamedata` Format
 
 The `opengamedata` format inserts to a database with the following columns:
 
@@ -88,7 +88,7 @@ The `opengamedata` format inserts to a database with the following columns:
 
 ? - Columns with with prefix are optional.  
 ^ - Columns with this prefix are calculated by the server and do not need to be part of the request.  
-\* - Columns with this prefix should be included as request parameters, i.e. part of the request string. `player_id` is optional. 
+\* - Columns with this prefix should be included as request parameters, i.e. part of the request string.
 All other columns are a part of the request data, discussed further down.  
 
 The full request string should be formatted as follows:
