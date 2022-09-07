@@ -78,7 +78,6 @@ function generateLoggerValues($datum, $conn) {
   if(isset($_REQUEST["session_id"]))            $session_id            = filter_var($_REQUEST["session_id"],            FILTER_SANITIZE_NUMBER_INT); else die("No session_id");
   if(isset($_REQUEST["persistent_session_id"])) $persistent_session_id = filter_var($_REQUEST["persistent_session_id"], FILTER_SANITIZE_NUMBER_INT);
   if(isset($_REQUEST["player_id"]))             $player_id             = preg_replace("/[^a-zA-Z0-9]+/", "", $_REQUEST["player_id"]);
-  if(isset($_REQUEST["user_id"]))               $user_id               = preg_replace("/[^a-zA-Z0-9]+/", "", $_REQUEST["user_id"]);
   if(isset($_REQUEST["req_id"]))                $req_id                = filter_var($_REQUEST["req_id"], FILTER_SANITIZE_NUMBER_INT);
   $remote_addr = $_SERVER["REMOTE_ADDR"];
   $http_user_agent = mysqli_real_escape_string($conn,$_SERVER["HTTP_USER_AGENT"]);
