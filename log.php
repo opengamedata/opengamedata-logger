@@ -225,7 +225,7 @@ function generateOGDValues($datum, $conn) {
 }
 
 # Actual code
-if (isset($_REQUEST["app_id"]) && $_REQUEST["app_id"] == "AQUALAB") {$$db = "opengamedata";}
+if (isset($_REQUEST["app_id"]) && $_REQUEST["app_id"] == "AQUALAB") {$db = "opengamedata";}
 $conn = mysqli_connect($servername, $username, $password, $db);
 if(!$conn) {die("Connection failed: " . mysqli_connect_error());}
 
