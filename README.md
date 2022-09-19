@@ -14,6 +14,8 @@ Sending logs to the database can be handled by a single script which builds a re
 
 The data logger supports two formats:
 
+<a name="Formats"/>
+
 ## Formats
 
 ### `logger` Format
