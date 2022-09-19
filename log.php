@@ -169,7 +169,7 @@ function generateOGDValues($datum, $conn) {
 
   if(isset($datum->client_offset)) {
     $client_offset = mysqli_real_escape_string($conn,$datum->client_offset);
-  } else {$client_offset = time("H:i:s");}
+  } else {$client_offset = "00:00:00";}
 
   if(isset($datum->event_name)) {
     $event_name = mysqli_real_escape_string($conn,$datum->event_name);
