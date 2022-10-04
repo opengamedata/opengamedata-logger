@@ -262,7 +262,9 @@ for($i = 0; $i < $n_rows; $i++)
 if($n_rows > 0) {
   $result = mysqli_query($conn,$query);
   if (!$result) {
-    error_log("Query failed with error: ".mysqli_error($conn));
+    $sql_err = "Query failed with error: ".mysqli_error($conn);
+    error_log($sql_err);
+    die($sql_err)
   }
 }
 else {error_log("Didn't perform query, n_rows is ".$n_rows);}
