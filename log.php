@@ -225,7 +225,7 @@ function generateOGDValues($datum, $conn) {
 # Actual code
 if (isset($_REQUEST["app_id"])) {
   $upper = strtoupper($_REQUEST["app_id"]);
-  $ogd_games = array("AQUALAB", "ICECUBE", "PENGUINS");
+  $ogd_games = array("AQUALAB", "ICECUBE", "MASHOPOLIS", "PENGUINS");
   if (in_array($upper, $ogd_games)) {
     $db = "opengamedata";
   }
