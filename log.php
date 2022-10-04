@@ -264,7 +264,7 @@ if($n_rows > 0) {
   if (!$result) {
     $sql_err = "Query failed with error: ".mysqli_error($conn);
     error_log($sql_err);
-    die($sql_err)
+    die($sql_err);
   }
 }
 else {error_log("Didn't perform query, n_rows is ".$n_rows);}
