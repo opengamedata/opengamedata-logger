@@ -34,7 +34,7 @@ function generateQueryColumns($schema) {
         ") VALUES";
       break;
     case $MYSQL_SCHEMAS[1]:
-      return "INSERT INTO ".$_REQUEST['app_id']." (".
+      return "INSERT INTO ".strtoupper($_REQUEST['app_id'])." (".
         "session_id,".
         "user_id,".
         "user_data,".
@@ -197,6 +197,7 @@ function generateOGDValues($datum, $conn) {
 
   if(isset($datum->event_sequence_index)) {
     $event_sequence_index  = filter_var($datum->event_sequence_index, FILTER_SANITIZE_NUMBER_INT);
+    // error_log("From datum ".json_encode($datum).", event sequence index is ".$datum->event_sequence_index);
   } else { die("No event_sequence_index"); }
 
   $http_user_agent = mysqli_real_escape_string($conn,$_SERVER["HTTP_USER_AGENT"]);
@@ -225,11 +226,16 @@ function generateOGDValues($datum, $conn) {
 # Actual code
 if (isset($_REQUEST["app_id"])) {
   $upper = strtoupper($_REQUEST["app_id"]);
+  // error_log("The app id in upper-case is: ".$upper);
   $ogd_games = array("AQUALAB", "ICECUBE", "MASHOPOLIS", "PENGUINS");
   if (in_array($upper, $ogd_games)) {
     $db = "opengamedata";
   }
 }
+// else {
+//   $req = json_encode($_REQUEST);
+//   error_log("Did not find an app_id in REQUEST data: ".$req);
+// }
 $conn = mysqli_connect($servername, $username, $password, $db);
 if(!$conn) {die("Connection failed: " . mysqli_connect_error());}
 
