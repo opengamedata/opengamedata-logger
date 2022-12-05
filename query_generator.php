@@ -84,8 +84,10 @@
       "app_branch,".
       "log_version,".
       "event_sequence_index,".
+      "host,".
       "remote_addr,".
       "http_user_agent".
+      "synced".
       ") VALUES";
    }
 
@@ -257,7 +259,9 @@
       $server_time = "CURRENT_TIMESTAMP";
       $event_data_str = !is_null($event_data) ? $event_data : "NULL";
       $event_source = "GAME";
+      $host = $_SERVER['HTTP_HOST'];
       $remote_addr = $_SERVER["REMOTE_ADDR"];
+      $synced      = 0;
       return "(".
          "\"".$session_id."\",".
          "\"".$user_id."\",".
@@ -274,8 +278,10 @@
          "\"".$app_branch."\",".
          "\"".$log_version."\",".
          "\"".$event_sequence_index."\",".
+         "\"".$host."\",".
          "\"".$remote_addr."\",".
          "\"".$http_user_agent."\"".
+         "\"".$synced."\"".
       ")";
    }
 
