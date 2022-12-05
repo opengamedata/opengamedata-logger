@@ -41,7 +41,7 @@ if(count($data) > 0) {
     die("FAIL: ".$sql_err);
   }
 }
-else {error_log("Didn't perform query, n_rows is ".$n_rows);}
+else {error_log("Didn't perform query, n_rows is <= 0");}
 die("SUCCESS: ".$query);
 
 ?>
