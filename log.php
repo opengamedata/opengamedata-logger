@@ -30,6 +30,7 @@ if(!$conn) {die("FAIL: Could not connect to the database.\nError message: " . my
 $data = json_decode(base64_decode($_POST["data"]));
 if(!is_array($data)) { $d = $data; $data = array(); array_push($data,$d); }
 $query = generateQueryString($REQUEST_SCHEMA, $upper, $data, $conn);
+$n_rows = count($data);
 // error_log("The query is: ".$query);
 
 # 4. Send the query itself. Log errors if failed.
