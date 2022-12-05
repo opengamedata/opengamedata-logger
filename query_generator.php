@@ -9,7 +9,7 @@
       $n_rows = count($data);
       switch ($schema) {
          case $LOGGER_SCHEMA:
-            $cols = OGDInsert($app_id).OGDColumns();
+            $cols = LoggerInsert().LoggerColumns();
             for($i = 0; $i < $n_rows; $i++)
             {
                $vals .= LoggerValues($data[$i], $conn);
