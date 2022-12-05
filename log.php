@@ -9,15 +9,15 @@ include('query_generator.php');
 $REQUEST_SCHEMA = $OGD_SCHEMA;
 $UPPER = "NO APP ID";
 if (isset($_REQUEST["app_id"])) {
-  $upper = strtoupper($_REQUEST["app_id"]);
+  $UPPER = strtoupper($_REQUEST["app_id"]);
   // error_log("The app id in upper-case is: ".$upper);
   $logger_games = array("BACTERIA",   "BALLOON",  "CRYSTAL",    "CYCLE_CARBON", "CYCLE_NITROGEN", "CYCLE_WATER",
                         "EARTHQUAKE", "JOWILDER", "LAKELAND",   "MAGNET",       "WAVES",          "WIND");
   $ogd_games    = array("AQUALAB",    "ICECUBE",  "MASHOPOLIS", "PENGUINS");
-  if (in_array($upper, $logger_games)) {
+  if (in_array($UPPER, $logger_games)) {
     $REQUEST_SCHEMA = $LOGGER_SCHEMA;
   }
-  elseif (in_array($upper, $ogd_games)) {
+  elseif (in_array($UPPER, $ogd_games)) {
     $REQUEST_SCHEMA = $OGD_SCHEMA;
   }
 }
