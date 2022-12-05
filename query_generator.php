@@ -288,7 +288,7 @@
          "\"".$event_sequence_index."\",".
          "\"".$host."\",".
          "\"".$remote_addr."\",".
-         "\"".$http_user_agent."\"".
+         "\"".$http_user_agent."\",".
          "\"".$synced."\"".
       ")";
    }
