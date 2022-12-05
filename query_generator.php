@@ -261,7 +261,7 @@
    function generateValueString(string $session_id,  ?string $user_id,        ?string $user_data,
                                 string $client_time,  string $client_time_ms, ?string $client_offset,
                                 string $event_name,  ?string $event_data,     ?string $game_state,
-                                string $app_version,  string $app_branch,      string $log_version,
+                                string $app_version, ?string $app_branch,      string $log_version,
                                 string $event_sequence_index, string $http_user_agent) : string
    {
       $server_time = "CURRENT_TIMESTAMP";
