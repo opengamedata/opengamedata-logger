@@ -37,7 +37,7 @@ $n_rows = count($data);
 if($n_rows > 0) {
   $result = mysqli_query($conn,$query);
   if (!$result) {
-    $sql_err = "Query failed with error: ".mysqli_error($conn);
+    $sql_err = "Query for ".$UPPER." failed with error: ".mysqli_error($conn);
     error_log($sql_err);
     die("FAIL: ".$sql_err);
   }
