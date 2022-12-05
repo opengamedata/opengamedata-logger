@@ -29,12 +29,12 @@ if(!$conn) {die("FAIL: Could not connect to the database.\nError message: " . my
 # 3. Generate the query data from raw input data.
 $data = json_decode(base64_decode($_POST["data"]));
 if(!is_array($data)) { $d = $data; $data = array(); array_push($data,$d); }
-$query = generateQueryString($REQUEST_SCHEMA, $UPPER, $data, $conn);
 $n_rows = count($data);
-// error_log("The query is: ".$query);
 
 # 4. Send the query itself. Log errors if failed.
 if($n_rows > 0) {
+  $query = generateQueryString($REQUEST_SCHEMA, $UPPER, $data, $conn);
+  // error_log("The query is: ".$query);
   $result = mysqli_query($conn,$query);
   if (!$result) {
     $sql_err = "Query for ".$UPPER." failed with error: ".mysqli_error($conn);
