@@ -12,7 +12,7 @@
             $cols = LoggerInsert().LoggerColumns();
             for($i = 0; $i < $n_rows; $i++)
             {
-               $vals .= LoggerValues($data[$i], $conn);
+               $vals .= LoggerValues($data[$i], $conn, false);
                if($i < $n_rows-1) {
                   $vals .= ",";
                }
@@ -99,7 +99,7 @@
       ") VALUES";
    }
 
-   function LoggerValues($datum, $conn) : string {
+   function LoggerValues($datum, $conn, $to_ogd) : string {
       # 1. Get all the variables out of a Logger package.
       $app_id      = "NO APP_ID";
       $app_version_raw = null;
