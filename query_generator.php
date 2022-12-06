@@ -148,10 +148,34 @@
             $client_time_ms = 0;
          }
       }
-      return LoggerToOGDValues($app_id,             $app_version_raw, $session_id,   $persistent_session_id,
-                               $player_id,          $req_id,          $remote_addr,  $http_user_agent, 
-                               $level,              $event,           $event_custom, $event_data_simple,
-                               $event_data_complex, $session_n,       $client_time,  $client_time_ms);
+      if ($to_ogd) {
+         return LoggerToOGDValues($app_id,            $app_version_raw, $session_id,   $persistent_session_id,
+                                 $player_id,          $req_id,          $remote_addr,  $http_user_agent, 
+                                 $level,              $event,           $event_custom, $event_data_simple,
+                                 $event_data_complex, $session_n,       $client_time,  $client_time_ms);
+      }
+      else {
+         return "(".
+               "\"".$app_id."\",".
+               "\"".$app_id."\",".
+               "\"".$app_version_raw."\",".
+               "\"".$session_id."\",".
+               "\"".$persistent_session_id."\",".
+               "\"".$player_id."\",".
+               "\"".$level."\",".
+               "\"".$event."\",".
+               "\"".$event_custom."\",".
+               "\"".$event_data_simple."\",".
+               (!is_null($event_data_complex) ? "\"".$event_data_complex."\"," : "NULL,").
+               "\"".$client_time."\",".
+               "\"".$client_time_ms."\",".
+               "CURRENT_TIMESTAMP,".
+               "\"".$remote_addr."\",".
+               "\"".$req_id."\",".
+               "\"".$session_n."\",".
+               "\"".$http_user_agent."\"".
+               ")";
+      }
    }
 
    function LoggerToOGDValues($app_id,             $app_version_raw, $session_id,   $persistent_session_id,
