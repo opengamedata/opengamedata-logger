@@ -36,10 +36,10 @@ if(!is_array($data)) { $d = $data; $data = array(); array_push($data,$d); }
 # 4. Send the query itself. Log errors if failed.
 if(count($data) > 0) {
   $query = generateQueryString($REQUEST_SCHEMA, $UPPER, $data, $conn);
-  // error_log("The query is: ".$query);
   $result = mysqli_query($conn,$query);
   if (!$result) {
     $sql_err = "Query for ".$UPPER." failed with error: ".mysqli_error($conn);
+    // error_log("The query is: ".$query);
     error_log($sql_err);
     die("FAIL: ".$sql_err);
   }
