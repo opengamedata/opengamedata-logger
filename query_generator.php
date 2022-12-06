@@ -277,7 +277,7 @@
          "\"".$client_time."\",".
          "\"".$client_time_ms."\",".
          "\"".$client_offset."\",".
-         "\"".$server_time."\",".
+         "".$server_time.",".
          "\"".$event_name."\",".
          "\"".$event_data_str."\",".
          "\"".$event_source."\",".
