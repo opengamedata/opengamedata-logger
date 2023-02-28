@@ -12,7 +12,7 @@
          case $LOGGER_SCHEMA:
             for($i = 0; $i < $n_rows; $i++)
             {
-               $vals .= LoggerValues($data[$i], $conn);
+               $vals .= LoggerToOGDValues($data[$i], $conn);
                if($i < $n_rows-1) {
                   $vals .= ",";
                }
@@ -71,7 +71,7 @@
       ") VALUES";
    }
 
-   function LoggerValues($datum, $conn) : string {
+   function LoggerToOGDValues($datum, $conn) : string {
       # 1. Get all the variables out of a Logger package.
       $app_version_raw = null;
       $session_id  = null;
