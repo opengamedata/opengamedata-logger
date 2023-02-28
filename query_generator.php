@@ -7,9 +7,9 @@
       global $OGD_SCHEMA;
       $vals = "";
       $n_rows = count($data);
+      $cols = OGDInsert($app_id).OGDColumns();
       switch ($schema) {
          case $LOGGER_SCHEMA:
-            $cols = OGDInsert($app_id).OGDColumns();
             for($i = 0; $i < $n_rows; $i++)
             {
                $vals .= LoggerValues($data[$i], $conn);
@@ -20,7 +20,6 @@
             return $cols.$vals;
             break;
          case $OGD_SCHEMA:
-            $cols = OGDInsert($app_id).OGDColumns();
             for($i = 0; $i < $n_rows; $i++)
             {
                $vals .= OGDValues($data[$i], $conn);
@@ -44,35 +43,8 @@
       }
    }
 
-   function LoggerInsert() : string {
-      return "INSERT INTO log ";
-   }
-
    function OGDInsert($app_id) : string {
       return "INSERT INTO ".$app_id." ";
-   }
-
-   function LoggerColumns() : string {
-      return "(".
-      "app_id,".
-      "app_id_fast,".
-      "app_version,".
-      "session_id,".
-      "persistent_session_id,".
-      "player_id,".
-      "level,".
-      "event,".
-      "event_custom,".
-      "event_data_simple,".
-      "event_data_complex,".
-      "client_time,".
-      "client_time_ms,".
-      "server_time,".
-      "remote_addr,".
-      "req_id,".
-      "session_n,".
-      "http_user_agent".
-      ") VALUES";
    }
 
    function OGDColumns() : string {
