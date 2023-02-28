@@ -12,7 +12,7 @@
             $cols = OGDInsert($app_id).OGDColumns();
             for($i = 0; $i < $n_rows; $i++)
             {
-               $vals .= LoggerValues($data[$i], $conn, true);
+               $vals .= LoggerValues($data[$i], $conn);
                if($i < $n_rows-1) {
                   $vals .= ",";
                }
