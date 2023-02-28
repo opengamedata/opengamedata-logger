@@ -7,7 +7,6 @@ include('query_generator.php');
 
 # 1. Figure out what the input schema looks like
 $REQUEST_SCHEMA = $OGD_SCHEMA;
-$db = "opengamedata";
 $UPPER = "NO APP ID";
 if (isset($_REQUEST["app_id"])) {
   $UPPER = strtoupper($_REQUEST["app_id"]);
@@ -17,11 +16,9 @@ if (isset($_REQUEST["app_id"])) {
   $ogd_games    = array("AQUALAB",    "ICECUBE", "JOURNALISM", "MASHOPOLIS", "PENGUINS");
   if (in_array($UPPER, $logger_games)) {
     $REQUEST_SCHEMA = $LOGGER_SCHEMA;
-    $db = "logger";
   }
   elseif (in_array($UPPER, $ogd_games)) {
     $REQUEST_SCHEMA = $OGD_SCHEMA;
-    $db = "opengamedata";
   }
 }
 
