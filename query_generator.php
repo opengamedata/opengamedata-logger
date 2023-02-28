@@ -99,41 +99,46 @@
       ") VALUES";
    }
 
-   function LoggerValues($datum, $conn, $to_ogd) : string {
+   function LoggerValues($datum, $conn) : string {
       # 1. Get all the variables out of a Logger package.
-      $app_id      = "NO APP_ID";
       $app_version_raw = null;
       $session_id  = null;
       $persistent_session_id = null;
       $player_id   = null;
-      $req_id      = null;
-      $remote_addr = $_SERVER["REMOTE_ADDR"];
       $http_user_agent = mysqli_real_escape_string($conn,$_SERVER["HTTP_USER_AGENT"]);
 
       //per dump
-      if(isset($_REQUEST["app_id"]))                $app_id                = mysqli_real_escape_string($conn,$_REQUEST["app_id"]);                       else die("No app_id");
       if(isset($_REQUEST["app_version"]))           $app_version_raw       = filter_var($_REQUEST["app_version"],           FILTER_SANITIZE_NUMBER_INT); else die("No app_version");
       if(isset($_REQUEST["session_id"]))            $session_id            = filter_var($_REQUEST["session_id"],            FILTER_SANITIZE_NUMBER_INT); else die("No session_id");
       if(isset($_REQUEST["persistent_session_id"])) $persistent_session_id = filter_var($_REQUEST["persistent_session_id"], FILTER_SANITIZE_NUMBER_INT);
       if(isset($_REQUEST["player_id"]))             $player_id             = preg_replace("/[^a-zA-Z0-9]+/", "", $_REQUEST["player_id"]);
-      if(isset($_REQUEST["req_id"]))                $req_id                = filter_var($_REQUEST["req_id"], FILTER_SANITIZE_NUMBER_INT);
 
       $level = 0;
       $event = "UNDEFINED";
       $event_custom = 0;
-      $event_data_simple = 0;
       $event_data_complex = NULL;
       $client_time = date("M d Y H:i:s");
       $client_time_ms = 0;
       $session_n      = -1;
 
-      if(isset($datum->level))              $level              = filter_var($datum->level,             FILTER_SANITIZE_NUMBER_INT);
-      if(isset($datum->event))              $event              = mysqli_real_escape_string($conn,$datum->event);
+      if(isset($datum->level)) {
+         $level = filter_var($datum->level, FILTER_SANITIZE_NUMBER_INT);
+      }
+      if(isset($datum->event)) {
+         $event = mysqli_real_escape_string($conn,$datum->event);
+      }
       //optional
-      if(isset($datum->event_custom))       $event_custom       = filter_var($datum->event_custom,      FILTER_SANITIZE_NUMBER_INT);
-      if(isset($datum->event_data_simple))  $event_data_simple  = filter_var($datum->event_data_simple, FILTER_SANITIZE_NUMBER_INT);
-      if(isset($datum->event_data_complex)) $event_data_complex = mysqli_real_escape_string($conn,$datum->event_data_complex);
-      if(isset($datum->session_n))          $session_n          = filter_var($datum->session_n, FILTER_SANITIZE_NUMBER_INT);
+      if(isset($datum->event_custom)) {
+         $event_custom = filter_var($datum->event_custom, FILTER_SANITIZE_NUMBER_INT);
+      }
+      if(isset($datum->event_data_complex)) {
+         $event_data_complex = mysqli_real_escape_string($conn,$datum->event_data_complex);
+      } else {
+         $event_data_complex = "{}";
+      }
+      if(isset($datum->session_n)) {
+         $session_n = filter_var($datum->session_n, FILTER_SANITIZE_NUMBER_INT);
+      }
       if(isset($datum->client_time))
       {
          $client_time = mysqli_real_escape_string($conn,$datum->client_time);
@@ -148,40 +153,6 @@
             $client_time_ms = 0;
          }
       }
-      if ($to_ogd) {
-         return LoggerToOGDValues($app_id,            $app_version_raw, $session_id,   $persistent_session_id,
-                                 $player_id,          $req_id,          $remote_addr,  $http_user_agent, 
-                                 $level,              $event,           $event_custom, $event_data_simple,
-                                 $event_data_complex, $session_n,       $client_time,  $client_time_ms);
-      }
-      else {
-         return "(".
-               "\"".$app_id."\",".
-               "\"".$app_id."\",".
-               "\"".$app_version_raw."\",".
-               "\"".$session_id."\",".
-               "\"".$persistent_session_id."\",".
-               "\"".$player_id."\",".
-               "\"".$level."\",".
-               "\"".$event."\",".
-               "\"".$event_custom."\",".
-               "\"".$event_data_simple."\",".
-               (!is_null($event_data_complex) ? "\"".$event_data_complex."\"," : "NULL,").
-               "\"".$client_time."\",".
-               "\"".$client_time_ms."\",".
-               "CURRENT_TIMESTAMP,".
-               "\"".$remote_addr."\",".
-               "\"".$req_id."\",".
-               "\"".$session_n."\",".
-               "\"".$http_user_agent."\"".
-               ")";
-      }
-   }
-
-   function LoggerToOGDValues($app_id,             $app_version_raw, $session_id,   $persistent_session_id,
-                              $player_id,          $req_id,          $remote_addr,  $http_user_agent,
-                              $level,              $event,           $event_custom, $event_data_simple,
-                              $event_data_complex, $session_n,       $client_time,  $client_time_ms) : string {
       # 2. Convert Logger stuff over to naming for an OGD package
       // $session_id = $session_id;
       $user_id = $player_id;
@@ -225,6 +196,8 @@
 
       if(isset($_REQUEST["user_data"])) {
          $user_data = mysqli_real_escape_string($conn, $_REQUEST["user_data"]);
+      } else {
+         $user_data = "{}";
       }
 
       if(isset($datum->client_time))
@@ -252,10 +225,14 @@
 
       if(isset($datum->event_data)) {
          $event_data = mysqli_real_escape_string($conn,$datum->event_data);
+      } else {
+         $event_data = "{}";
       }
 
       if(isset($datum->game_state)) {
          $game_state = mysqli_real_escape_string($conn,$datum->game_state);
+      } else {
+         $game_state = "{}";
       }
 
       if(isset($_REQUEST["app_version"])) {
