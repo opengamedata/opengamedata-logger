@@ -154,11 +154,8 @@
          }
       }
       # 2. Convert Logger stuff over to naming for an OGD package
-      // $session_id = $session_id;
       $user_id = $player_id;
       $user_data = json_encode( ["persistent_session_id" => $persistent_session_id] );
-      // $client_time = $client_time;
-      // $client_time_ms = $client_time_ms;
       $client_offset = null;
       $event_name = $event.".".$event_custom;
       $event_data = $event_data_complex;
@@ -167,7 +164,6 @@
       $app_branch  = "main";
       $log_version = $app_version_raw;
       $event_sequence_index = $session_n;
-      // $http_user_agent = $http_user_agent;
       return generateValueString($session_id, $user_id,    $user_data,  $client_time, $client_time_ms, $client_offset,
                                  $event_name, $event_data, $game_state, $app_version, $app_branch,     $log_version,
                                  $event_sequence_index,    $http_user_agent);
