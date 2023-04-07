@@ -127,11 +127,11 @@
       }
       # 2. Convert Logger stuff over to naming for an OGD package
       $user_id = $player_id;
-      $user_data = json_encode( ["persistent_session_id" => $persistent_session_id] );
+      $user_data = mysqli_real_escape_string($conn, json_encode( ["persistent_session_id" => $persistent_session_id] ));
       $client_offset = null;
       $event_name = $event.".".$event_custom;
       $event_data = $event_data_complex;
-      $game_state = json_encode( ["level" => $level] );
+      $game_state = mysqli_real_escape_string($conn, json_encode( ["level" => $level] ));
       $app_version = "1.0";
       $app_branch  = "main";
       $log_version = $app_version_raw;
