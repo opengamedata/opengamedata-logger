@@ -89,7 +89,7 @@
       $event = "UNDEFINED";
       $event_custom = 0;
       $event_data_complex = NULL;
-      $client_time = date("M d Y H:i:s");
+      $client_time = date("Y-m-d H:i:s");
       $client_time_ms = 0;
       $session_n      = -1;
 
@@ -147,7 +147,7 @@
    //per dump
       $user_id = NULL;   
       $user_data = NULL;
-      $client_time = date("M d Y H:i:s");
+      $client_time = date("Y-m-d H:i:s");
       $client_time_ms = 0;
       $client_offset = "00:00:00";
       $event_data = NULL;
