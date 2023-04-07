@@ -245,7 +245,7 @@
          "\"".$user_data."\",".
          "\"".$client_time."\",".
          "\"".$client_time_ms."\",".
-         "\"".$client_offset."\",".
+         (!is_null($client_offset) ? "\"".$client_offset."\"" : "NULL").",".
          "".$server_time.",".
          "\"".$event_name."\",".
          "\"".$event_data_str."\",".
