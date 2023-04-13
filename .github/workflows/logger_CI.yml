@@ -16,6 +16,7 @@ env:
 
 jobs:
   ci_deploy:
+    name: CI Deploy
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
