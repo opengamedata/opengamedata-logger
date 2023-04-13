@@ -26,17 +26,17 @@ runs:
   using: "composite"
   steps:
     - name: Set up config
-      run: cp config/config.py.template config/config.py 
+      run: cp config.php.template config.php 
       shell: bash
     - name: Set DB hostname
-      run: sed -i 's@127.0.0.1@${{inputs.db_host}}@g' config/config.py
+      run: sed -i 's@127.0.0.1@${{inputs.db_host}}@g' config.php
       shell: bash
     - name: Set DB username
-      run: sed -i 's@user placeholder@${{inputs.db_user}}@g' config/config.py
+      run: sed -i 's@user placeholder@${{inputs.db_user}}@g' config.php
       shell: bash
     - name: Set DB pass
-      run: sed -i 's@pass placeholder@${{inputs.db_pass}}@g' config/config.py
+      run: sed -i 's@pass placeholder@${{inputs.db_pass}}@g' config.php
       shell: bash
     - name: Set DB name
-      run: sed -i 's@db placeholder@${{inputs.db_name}}@g' config/config.py
+      run: sed -i 's@db placeholder@${{inputs.db_name}}@g' config.php
       shell: bash
