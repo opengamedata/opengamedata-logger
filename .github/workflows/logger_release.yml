@@ -38,7 +38,7 @@ jobs:
       uses: burnett01/rsync-deployments@5.2
       with:
         switches: -vrc --exclude-from rsync-exclude
-        path: ./*.php
+        path: ./*
         remote_path: ${{ vars.WEB_PATH }}${{ env.BRANCH_PATH }}
         remote_host: ${{ vars.OGD_LOGGER_HOST }}
         remote_user: ${{ secrets.DEPLOY_USER }}

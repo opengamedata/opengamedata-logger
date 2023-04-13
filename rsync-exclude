@@ -2,7 +2,8 @@
 .gitignore
 .gitmodules
 .git
+.github
 makefile
 README.md
-config.php
+config.php.template
 rsync-exclude
