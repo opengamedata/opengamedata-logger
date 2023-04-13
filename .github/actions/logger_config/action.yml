@@ -4,24 +4,39 @@ description: "Given a set of appropriate inputs, this action prepares a config.j
 branding:
   icon: 'clipboard'
   color: 'blue'
-# inputs:
-#   db_host:
-#     description: "Host of the database"
-#     required: true
-#     default: 'db placeholder'
-#   db_user:
-#     description: "User name for the database"
-#     required: true
-#     default: 'user placeholder'
+inputs:
+  db_host:
+    description: "Host of the database"
+    required: false
+    default: '127.0.0.1'
+  db_user:
+    description: "User name for the database"
+    required: true
+    default: 'user placeholder'
+  db_pass:
+    description: "Password for the database"
+    required: true
+    default: 'pass placeholder'
+  db_name:
+    description: "Name of the database to use"
+    required: false
+    default: 'opengamedata'
+
 runs:
   using: "composite"
   steps:
     - name: Set up config
       run: cp config/config.py.template config/config.py 
       shell: bash
-    # - name: Set DB hostname
-    #   run: sed -i 's@127.0.0.1@${{inputs.db_host}}@g' config/config.py
-    #   shell: bash
-    # - name: Set DB username
-    #   run: sed -i 's@username@${{inputs.db_user}}@g' config/config.py
-    #   shell: bash
+    - name: Set DB hostname
+      run: sed -i 's@127.0.0.1@${{inputs.db_host}}@g' config/config.py
+      shell: bash
+    - name: Set DB username
+      run: sed -i 's@user placeholder@${{inputs.db_user}}@g' config/config.py
+      shell: bash
+    - name: Set DB pass
+      run: sed -i 's@pass placeholder@${{inputs.db_pass}}@g' config/config.py
+      shell: bash
+    - name: Set DB name
+      run: sed -i 's@db placeholder@${{inputs.db_name}}@g' config/config.py
+      shell: bash
