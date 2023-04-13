@@ -3,12 +3,9 @@ name: OGD-Website-API CI
 on:
   push:
     paths:
-    - '.github/workflows/WebAPI_CI.yml'
+    - '.github/workflows/logger_CI.yml'
     - '.github/actions/**'
-    - 'interfaces/**'
-    - 'models/**'
-    - 'app.py'
-    - 'app.wsgi'
+    - './*.php'
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
 
 env:
