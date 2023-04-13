@@ -16,9 +16,9 @@ jobs:
 
     - name: Set up Config File
       uses: ./.github/actions/logger_config
-    #   with:
-    #     db_host:
-    #     db_user:
+      with:
+        db_user: ${{ secrets.OGD_LOGGING_USER }}
+        db_pass: ${{ secrets.OGD_LOGGING_PASS }}
 
     - name: Get OpenConnect installed
       run: sudo apt-get -q update && sudo apt-get -q install openconnect
