@@ -1,0 +1,27 @@
+name: "Set up config file for a run"
+author: Luke Swanson
+description: "Given a set of appropriate inputs, this action prepares a config.js file for the Website API."
+branding:
+  icon: 'clipboard'
+  color: 'blue'
+# inputs:
+#   db_host:
+#     description: "Host of the database"
+#     required: true
+#     default: 'db placeholder'
+#   db_user:
+#     description: "User name for the database"
+#     required: true
+#     default: 'user placeholder'
+runs:
+  using: "composite"
+  steps:
+    - name: Set up config
+      run: cp config/config.py.template config/config.py 
+      shell: bash
+    # - name: Set DB hostname
+    #   run: sed -i 's@127.0.0.1@${{inputs.db_host}}@g' config/config.py
+    #   shell: bash
+    # - name: Set DB username
+    #   run: sed -i 's@username@${{inputs.db_user}}@g' config/config.py
+    #   shell: bash
