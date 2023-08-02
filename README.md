@@ -75,7 +75,7 @@ The `opengamedata` format inserts to a database with the following columns:
 - *?`user_data`: Additional custom data about a user, as a json dictionary
 - `client_time`: client's timestamp resolved to the second
 - ^`client_time_ms`: client's timestamp in number of milliseconds
-- `client_offset`: offset of client's local time from GMT
+- `client_offset`: offset of client's local time from UTC
 - ^`server_time`: server time when the event was logged
 - `event_name`: the type of event logged
 - `event_data`: a JSON string containing all the logged information
