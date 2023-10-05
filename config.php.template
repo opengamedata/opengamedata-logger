@@ -2,8 +2,8 @@
 header("Access-Control-Allow-Origin: *");
 
 $servername = "127.0.0.1";
-$username = "user";
-$password = "pass";
-$db = "db";
+$username = "user placeholder";
+$password = "pass placeholder";
+$db = "db placeholder";
 
 ?>

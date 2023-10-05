@@ -89,7 +89,7 @@
       $event = "UNDEFINED";
       $event_custom = 0;
       $event_data_complex = NULL;
-      $client_time = date("M d Y H:i:s");
+      $client_time = date("Y-m-d H:i:s");
       $client_time_ms = 0;
       $session_n      = -1;
 
@@ -127,11 +127,11 @@
       }
       # 2. Convert Logger stuff over to naming for an OGD package
       $user_id = $player_id;
-      $user_data = json_encode( ["persistent_session_id" => $persistent_session_id] );
+      $user_data = mysqli_real_escape_string($conn, json_encode( ["persistent_session_id" => $persistent_session_id] ));
       $client_offset = null;
       $event_name = $event.".".$event_custom;
       $event_data = $event_data_complex;
-      $game_state = json_encode( ["level" => $level] );
+      $game_state = mysqli_real_escape_string($conn, json_encode( ["level" => $level] ));
       $app_version = "1.0";
       $app_branch  = "main";
       $log_version = $app_version_raw;
@@ -147,7 +147,7 @@
    //per dump
       $user_id = NULL;   
       $user_data = NULL;
-      $client_time = date("M d Y H:i:s");
+      $client_time = date("Y-m-d H:i:s");
       $client_time_ms = 0;
       $client_offset = "00:00:00";
       $event_data = NULL;
@@ -245,7 +245,7 @@
          "\"".$user_data."\",".
          "\"".$client_time."\",".
          "\"".$client_time_ms."\",".
-         "\"".$client_offset."\",".
+         (!is_null($client_offset) ? "\"".$client_offset."\"" : "NULL").",".
          "".$server_time.",".
          "\"".$event_name."\",".
          "\"".$event_data_str."\",".
