@@ -6,9 +6,9 @@ on:
      branches: [ production ] 
 
 env:
-  DEPLOY_HOST: ${{ vars.OGD_SERVICES_HOST }}
+  DEPLOY_HOST: ${{ vars.OGD_LOGGER_HOST }}
   DEPLOY_DIR:  ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
-  DEPLOY_URL:  ${{ vars.OGD_SERVICES_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_URL:  ${{ vars.OGD_LOGGER_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
   URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
 
 jobs:
