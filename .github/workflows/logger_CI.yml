@@ -10,21 +10,33 @@ on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
 
 env:
-  BRANCH_PATH: ${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_HOST: ${{ vars.OGD_STAGING_HOST }}
+  DEPLOY_DIR:  ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
 
 jobs:
   ci_deploy:
-    name: CI Deploy
+    name: CI Deploy of OGD Event Logger
     runs-on: ubuntu-22.04
-    steps:
-    - uses: actions/checkout@v3
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
 
+    steps:
+
+  # 1. Local checkout & config
+    - name: Checkout repository
+      uses: actions/checkout@v3
     - name: Set up Config File
       uses: ./.github/actions/logger_config
       with:
         db_user: ${{ secrets.OGD_LOGGING_USER }}
         db_pass: ${{ secrets.OGD_LOGGING_PASS }}
 
+  # 2. Build 
+
+  # 3. Remote config & deploy
     - name: Get OpenConnect installed
       run: sudo apt-get -q update && sudo apt-get -q install openconnect
     - name: Connect VPN
@@ -35,20 +47,22 @@ jobs:
         mkdir -p ~/.ssh
         echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
-
     - name: Ensure directory exists
-      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ vars.OGD_STAGING_HOST }} "mkdir -p ${{ vars.WEB_PATH }}${{ env.BRANCH_PATH }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
 
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
       with:
         switches: -vrct --delete --exclude-from rsync-exclude
         path: ./*
-        remote_path: ${{ vars.WEB_PATH }}${{ env.BRANCH_PATH }}
-        remote_host: ${{ vars.OGD_STAGING_HOST }}
+        remote_path: ${{ env.DEPLOY_DIR }}
+        remote_host: ${{ env.DEPLOY_HOST }}
         remote_user: ${{ secrets.DEPLOY_USER }}
         remote_key:  ${{ secrets.DEPLOY_KEY  }}
 
+  # 4. Cleanup & complete
+    - name: Announce deploy
+      run: echo "Deployed to ${{ env.DEPLOY_URL }}"
     - name: Upload logs as artifacts
       uses: actions/upload-artifact@v3
       with:
