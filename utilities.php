@@ -29,6 +29,7 @@ function connectFlask($AppID, $jsonPackage)
     if (curl_errno($ch)) {
         error_log( 'cURL error when attempting to communicate with Monitor API: ' . curl_error($ch) );
     } else {
+        // TODO : Comment this out once we have the thing working.
         error_log( 'Response from Monitor API: ' . $response );
     }
 
