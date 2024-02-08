@@ -13,7 +13,8 @@ if (isset($_REQUEST["app_id"])) {
   // error_log("The app id in upper-case is: ".$upper);
   $logger_games = array("BACTERIA",   "BALLOON",  "CRYSTAL",    "CYCLE_CARBON", "CYCLE_NITROGEN", "CYCLE_WATER",
                         "EARTHQUAKE", "JOWILDER", "LAKELAND",   "MAGNET",       "WAVES",          "WIND");
-  $ogd_games    = array("AQUALAB",    "ICECUBE", "JOURNALISM", "MASHOPOLIS", "PENGUINS");
+  $ogd_games    = array("AQUALAB",    "ICECUBE", "JOURNALISM", "MASHOPOLIS", "PENGUINS", "THERMOVR",
+                        "TRANSFORMATION_QUEST");
   if (in_array($UPPER, $logger_games)) {
     $REQUEST_SCHEMA = $LOGGER_SCHEMA;
   }
