@@ -6,4 +6,6 @@ $username = "user placeholder";
 $password = "pass placeholder";
 $db = "db placeholder";
 
+$flaskURL = "monitor placeholder"
+
 ?>
