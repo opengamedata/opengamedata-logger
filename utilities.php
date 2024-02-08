@@ -27,9 +27,9 @@ function connectFlask($AppID, $jsonPackage)
 
     // check for cURL errors
     if (curl_errno($ch)) {
-        echo 'cURL error: ' . curl_error($ch);
+        error_log( 'cURL error: ' . curl_error($ch) );
     } else {
-        echo 'Response from flask app: ' . $response;
+        error_log( 'Response from flask app: ' . $response );
     }
 
     // close cURL session
