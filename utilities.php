@@ -8,6 +8,7 @@ function connectFlask($AppID, $jsonPackage)
     $flaskApiUrl = $flaskURL . $AppID;
     $timeout = 0.1;
     $ch = curl_init($flaskApiUrl);
+    curl_setopt($ch, CURLOPT_PORT, 5022);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt(
