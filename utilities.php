@@ -27,9 +27,9 @@ function connectFlask($AppID, $jsonPackage)
 
     // check for cURL errors
     if (curl_errno($ch)) {
-        error_log( 'cURL error: ' . curl_error($ch) );
+        error_log( 'cURL error when attempting to communicate with Monitor API: ' . curl_error($ch) );
     } else {
-        error_log( 'Response from flask app: ' . $response );
+        error_log( 'Response from Monitor API: ' . $response );
     }
 
     // close cURL session
