@@ -1,5 +1,5 @@
 # Workflow to build and deploy designer dashboard to server.
-name: OGD-Website-API CI
+name: OpenGameData Logger CI
 on:
   push:
     paths:

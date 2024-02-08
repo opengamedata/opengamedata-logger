@@ -1,5 +1,5 @@
 # Workflow to build and deploy designer dashboard to server.
-name: OGD-logger Deploy Script
+name: OpenGameData Logger Deploy Script
 on:
   release:
     types: released
