@@ -26,7 +26,7 @@ jobs:
       with:
         db_user: ${{ secrets.OGD_LOGGING_USER }}
         db_pass: ${{ secrets.OGD_LOGGING_PASS }}
-        monitor_url: ${{ vars.OGD_MONITOR_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}/monitor/monitor_app.py
+        monitor_url: ${{ vars.OGD_MONITOR_HOST }}
 
   # 2. Build 
 
