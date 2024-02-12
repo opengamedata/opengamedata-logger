@@ -44,22 +44,21 @@ if (count($data) > 0) {
   if ($result) {
 # 5. Make flask monitor connection after connecting to db
     $loggerData = combineParamsAndBody($_REQUEST, $data[0]);
-    // $current_time = microtime(true);
-    // $current_time_milliseconds = round($current_time * 1000);
-    // error_log("beforeTime:".$current_time_milliseconds);
+    $start_time_milliseconds = round(microtime(true) * 1000);
+    syslog(LOG_NOTICE, "Sending data to monitor, beforeTime:".$start_time_milliseconds);
     sendToMonitor($loggerData);
+    $end_time_milliseconds = round(microtime(true) * 1000);
+    syslog(LOG_NOTICE, "Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
     // if ($REQUEST_SCHEMA != $OGD_SCHEMA) {
-    //   error_log("Warning: Got an old-logger data format");
+    //   syslog(LOG_WARNING, "Warning: Got an old-logger data format");
     // }
-    // error_log("log.php test flaskApiUrl and loggerData \nflaskApiUrl: " . $flaskApiUrl . "\nloggerData: " . $loggerData);
   } else {
-    $sql_err = "Query for " . $APP_ID . " failed with error: " . mysqli_error($conn);
+    $sql_err = "Query for ".$APP_ID." failed with error: ".mysqli_error($conn);
     error_log($sql_err);
     die("FAIL: ".$sql_err);
   }
 } else {
   error_log("Didn't perform query, n_rows is <= 0");
 }
-
 die("SUCCESS: " . $query);
 ?>
