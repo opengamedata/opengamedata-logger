@@ -6,6 +6,7 @@ $username = "user placeholder";
 $password = "pass placeholder";
 $db = "db placeholder";
 
+$monitorEnabled = true;
 $monitorURL = "monitor placeholder";
 $monitorTimeout = 1;
 

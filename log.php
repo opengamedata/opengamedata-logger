@@ -42,16 +42,18 @@ if (count($data) > 0) {
   $query = generateQueryString($REQUEST_SCHEMA, $APP_ID, $data, $conn);
   $result = mysqli_query($conn, $query);
   if ($result) {
+    if ($monitorEnabled) {
 # 5. Make flask monitor connection after connecting to db
-    $loggerData = combineParamsAndBody($_REQUEST, $data[0]);
-    $start_time_milliseconds = round(microtime(true) * 1000);
-    syslog(LOG_NOTICE, "Sending data to monitor, beforeTime:".$start_time_milliseconds);
-    sendToMonitor($loggerData);
-    $end_time_milliseconds = round(microtime(true) * 1000);
-    syslog(LOG_NOTICE, "Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
-    // if ($REQUEST_SCHEMA != $OGD_SCHEMA) {
-    //   syslog(LOG_WARNING, "Warning: Got an old-logger data format");
-    // }
+      $loggerData = combineParamsAndBody($_REQUEST, $data[0]);
+      $start_time_milliseconds = round(microtime(true) * 1000);
+      syslog(LOG_NOTICE, "Sending data to monitor, beforeTime:".$start_time_milliseconds);
+      sendToMonitor($loggerData);
+      $end_time_milliseconds = round(microtime(true) * 1000);
+      syslog(LOG_NOTICE, "Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
+      // if ($REQUEST_SCHEMA != $OGD_SCHEMA) {
+      //   syslog(LOG_WARNING, "Warning: Got an old-logger data format");
+      // }
+    }
   } else {
     $sql_err = "Query for ".$APP_ID." failed with error: ".mysqli_error($conn);
     error_log($sql_err);
