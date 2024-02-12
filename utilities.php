@@ -5,7 +5,7 @@
 function sendToMonitor($jsonPackage)
 {
     include('config.php');
-    $ch = curl_init($flaskApiUrl . '/log/event');
+    $ch = curl_init($monitorURL . '/log/event');
     $headers = array(
         'Content-Type: application/json',
         'Content-Length: ' . strlen($jsonPackage)
@@ -18,7 +18,7 @@ function sendToMonitor($jsonPackage)
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPackage);
     // $timeout = 0.1;
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 50); // DEPLOYMENT CHANGE
-    curl_setopt($ch, CURLOPT_TIMEOUT_MS, 100);
+    curl_setopt($ch, CURLOPT_TIMEOUT_MS, $monitorTimeout);
     syslog(LOG_NOTICE, 'Sending packet to monitor API: ' . $jsonPackage );
     $response = curl_exec($ch);
 
