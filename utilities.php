@@ -18,7 +18,8 @@ function sendToMonitor($jsonPackage)
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPackage);
     // $timeout = 0.1;
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 50); // DEPLOYMENT CHANGE
-    curl_setopt($ch, CURLOPT_TIMEOUT_MS, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT_MS, 100);
+    syslog(LOG_NOTICE, 'Sending packet to monitor API: ' . $jsonPackage );
     $response = curl_exec($ch);
 
     // check for cURL errors
