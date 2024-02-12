@@ -25,6 +25,10 @@ inputs:
     description: "URL for the monitor API"
     required: true
     default: 'monitor placeholder'
+  monitor_timeout:
+    description: "How long the logger should wait for a response after sending data to the monitor API"
+    required: false
+    default: '1'
 
 runs:
   using: "composite"
@@ -46,4 +50,7 @@ runs:
       shell: bash
     - name: Set monitor API location
       run: sed -i 's@monitor placeholder@${{inputs.monitor_url}}@g' config.php
+      shell: bash
+    - name: Set monitor API timeout
+      run: sed -i 's@monitorTimeout = 1@monitorTimeout = ${{inputs.monitor_timeout}}@g' config.php
       shell: bash
