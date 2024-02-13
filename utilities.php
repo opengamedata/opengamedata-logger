@@ -5,7 +5,7 @@
 function sendToMonitor($jsonPackage)
 {
     include('config.php');
-    $ch = curl_init($monitorURL . '/log/event');
+    $ch = curl_init('https://'.$monitorURL.'/log/event');
     $headers = array(
         'Content-Type: application/json',
         'Content-Length: ' . strlen($jsonPackage)
