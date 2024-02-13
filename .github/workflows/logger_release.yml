@@ -12,8 +12,8 @@ env:
   URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
 
 jobs:
-  production_deploy:
-    name: Production Deploy
+  release_deploy:
+    name: Release Deploy of OGD Event Logger
     runs-on: ubuntu-22.04
 
     steps:
