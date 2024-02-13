@@ -1,9 +1,9 @@
 # Workflow to build and deploy designer dashboard to server.
 name: OGD-logger Deploy Script
 on:
+  release:
+    types: released
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
-  push: # Trigger automatically when we do a merge to production
-     branches: [ production ] 
 
 env:
   DEPLOY_HOST: ${{ vars.OGD_LOGGER_HOST }}
