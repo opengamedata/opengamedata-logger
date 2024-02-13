@@ -10,7 +10,7 @@ function sendToMonitor($jsonPackage)
         'Content-Type: application/json',
         'Content-Length: ' . strlen($jsonPackage)
     );
-    curl_setopt($ch, CURLOPT_PORT, 5022);
+    curl_setopt($ch, CURLOPT_PORT, 443);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
