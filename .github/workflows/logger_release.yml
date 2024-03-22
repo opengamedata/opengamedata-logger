@@ -26,9 +26,9 @@ jobs:
       with:
         db_user: ${{ secrets.OGD_LOGGING_USER }}
         db_pass: ${{ secrets.OGD_LOGGING_PASS }}
-        monitor_enabled: false
+        monitor_enabled: true
         monitor_url: ${{ vars.OGD_MONITOR_HOST }}
-        monitor_timeout: 1
+        monitor_timeout: 100
 
   # 2. Build 
 
