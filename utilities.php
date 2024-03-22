@@ -18,16 +18,17 @@ function sendToMonitor($jsonPackage)
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPackage);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 50); // DEPLOYMENT CHANGE
     curl_setopt($ch, CURLOPT_TIMEOUT_MS, $monitorTimeout);
-    syslog(LOG_NOTICE, 'Sending packet to monitor API at '.$monitorURL.' : ' . $jsonPackage );
+    // syslog(LOG_NOTICE, 'Sending packet to monitor API at '.$monitorURL.' : ' . $jsonPackage );
     $response = curl_exec($ch);
 
     // check for cURL errors
     if (curl_errno($ch)) {
         error_log( 'cURL error when attempting to communicate with Monitor API: ' . curl_error($ch) );
-    } else {
-        // TODO : Comment this out once we have the thing working.
-        syslog(LOG_NOTICE, 'Response from Monitor API: ' . $response );
     }
+    // } else {
+        // TODO : Comment this out once we have the thing working.
+        // syslog(LOG_NOTICE, 'Response from Monitor API: ' . $response );
+    // }
 
     // close cURL session
     curl_close($ch);
