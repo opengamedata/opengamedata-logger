@@ -7,9 +7,9 @@ on:
 
 env:
   DEPLOY_HOST: ${{ vars.OGD_LOGGER_HOST }}
-  DEPLOY_DIR:  ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
-  DEPLOY_URL:  ${{ vars.OGD_LOGGER_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
-  URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_DIR:  ${{ vars.WEB_PATH }}/logger
+  DEPLOY_URL:  ${{ vars.OGD_LOGGER_HOST }}/logger
+  URL_PATH:    logger
 
 jobs:
   release_deploy:
