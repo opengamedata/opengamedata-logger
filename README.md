@@ -85,8 +85,9 @@ The `opengamedata` format inserts to a database with the following columns:
 - *?`app_branch`: name of the branch of the game the event came from
 - *`log_version`: version of the logging code the event came from
 - `event_sequence_index`: integer that increments with each log, showing the true order of the logs
-- `remote_addr`: IP address of player's computer
-- `http_user_agent`: string representing the HTTP user agent
+- ^`host` : The host of the game that sent the event data
+- ^`remote_addr`: IP address of player's computer
+- ^`http_user_agent`: string representing the HTTP user agent
 
 ? - Columns with with prefix are optional.  
 ^ - Columns with this prefix are calculated by the server and do not need to be part of the request.  
