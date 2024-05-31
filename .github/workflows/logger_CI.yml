@@ -20,7 +20,7 @@ jobs:
     name: CI Deploy of OGD Event Logger
     runs-on: ubuntu-22.04
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.repository }}-${{ github.ref }}-${{ github.workflow }}
       cancel-in-progress: true
 
     steps:
