@@ -30,6 +30,10 @@ if (!$conn) {
 }
 
 # 3. Generate the query data from raw input data.
+/**
+ * An array of event data bodies, containing event_name, event_data, and similar columns.
+ * @var array
+ */
 $data = json_decode(base64_decode($_POST["data"]));
 if (!is_array($data)) {
   $d = $data;
