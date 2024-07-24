@@ -31,7 +31,6 @@
             break;
          default:
             error_log("Got schema name ".$schema." that did not match ".$LOGGER_SCHEMA." or ".$OGD_SCHEMA.", defaulting to ".$OGD_SCHEMA);
-            $cols = OGDInsert($app_id).OGDColumns();
             for($i = 0; $i < $n_rows; $i++)
             {
                $vals .= OGDValues($data[$i], $conn);
