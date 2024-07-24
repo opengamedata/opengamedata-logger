@@ -1,5 +1,6 @@
 # Workflow to build and deploy designer dashboard to server.
-name: OpenGameData Logger CI
+name: OGD Logger - CI Script
+run-name: ${{ format('{0} - {1}', github.workflow, github.event_name == 'push' && github.event.head_commit.message || 'Manual Run') }}
 on:
   push:
     paths:
