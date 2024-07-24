@@ -5,7 +5,7 @@ header("Access-Control-Allow-Origin: *");
 include('config.php');
 include('query_generator.php');
 include('utilities.php');
-# 1. Figure out what the input schema looks like
+# 1. Figure out what the input schema looks like, defaulting to full OGD schema.
 $REQUEST_SCHEMA = $OGD_SCHEMA;
 $APP_ID = "NO APP ID";
 if (isset($_REQUEST["app_id"])) {
@@ -13,8 +13,8 @@ if (isset($_REQUEST["app_id"])) {
   // error_log("The app id in upper-case is: ".$upper);
   $logger_games = array("BACTERIA",   "BALLOON",  "CRYSTAL",    "CYCLE_CARBON", "CYCLE_NITROGEN", "CYCLE_WATER",
                         "EARTHQUAKE", "JOWILDER", "LAKELAND",   "MAGNET",       "WAVES",          "WIND");
-  $ogd_games    = array("AQUALAB",    "ICECUBE", "JOURNALISM", "MASHOPOLIS", "PENGUINS", "THERMOVR",
-                        "TRANSFORMATION_QUEST");
+  $ogd_games    = array("AQUALAB",    "BLOOM",    "ICECUBE",    "JOURNALISM",   "MASHOPOLIS",     "PENGUINS",
+                        "THERMOVR",   "TRANSFORMATION_QUEST");
   if (in_array($APP_ID, $logger_games)) {
     $REQUEST_SCHEMA = $LOGGER_SCHEMA;
   }
