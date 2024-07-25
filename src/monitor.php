@@ -1,4 +1,7 @@
 <?php
+/**
+ * Module for forwarding data to the monitor service.
+ */
 
 // connect to flask app with flask api url
 // send json package to flask app
@@ -49,7 +52,7 @@ function combineParamsAndBody($paramArray, $bodyObject)
     }
 
     // remove the elements you do not want to send through log.php to flaskapp
-    unset($ret_val["data"]); // contains long string of encoded data
+    // unset($ret_val["data"]); // contains long string of encoded data
     unset($ret_val["remote_addr"]);
     unset($ret_val["http_user_agent"]);
 
