@@ -3,24 +3,12 @@ header("Access-Control-Allow-Headers: Origin, Authorization, X-Requested-With, C
 header("Access-Control-Allow-Origin: *");
 
 include('config.php');
+include('parser.php');
 include('query_generator.php');
 include('monitor.php');
 # 1. Figure out what the input schema looks like, defaulting to full OGD schema.
-$REQUEST_SCHEMA = $OGD_SCHEMA;
-$APP_ID = "NO APP ID";
-if (isset($_REQUEST["app_id"])) {
-  $APP_ID = strtoupper($_REQUEST["app_id"]);
-  $logger_games = array("BACTERIA",   "BALLOON",  "CRYSTAL",    "CYCLE_CARBON", "CYCLE_NITROGEN", "CYCLE_WATER",
-                        "EARTHQUAKE", "JOWILDER", "LAKELAND",   "MAGNET",       "WAVES",          "WIND");
-  $ogd_games    = array("AQUALAB",    "BLOOM",    "ICECUBE",    "JOURNALISM",   "MASHOPOLIS",     "PENGUINS",
-                        "THERMOVR",   "TRANSFORMATION_QUEST");
-  if (in_array($APP_ID, $logger_games)) {
-    $REQUEST_SCHEMA = $LOGGER_SCHEMA;
-  }
-  elseif (in_array($APP_ID, $ogd_games)) {
-    $REQUEST_SCHEMA = $OGD_SCHEMA;
-  }
-}
+$APP_ID = $_REQUEST["app_id"] ?? "NO APP ID";
+$REQUEST_SCHEMA = schemaFromAppID($APP_ID);
 
 # 2. Make the db connection before we go to the trouble of generating query.
 $conn = mysqli_connect($servername, $username, $password, $db);
