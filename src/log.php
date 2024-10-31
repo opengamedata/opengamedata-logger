@@ -24,9 +24,7 @@ if (count($data) > 0) {
   # 4. Send the query itself. Log errors if failed.
   $query = generateQueryString($REQUEST_SCHEMA, $APP_ID, $data, $conn);
   $result = mysqli_query($conn, $query);
-  if ($result) {
-    // syslog(LOG_NOTICE, "Successfully inserted event(s) to database");
-  } else {
+  if (!$result) {
     $sql_err = "Query for ".$APP_ID." failed with error: ".mysqli_error($conn);
     error_log($sql_err);
     die("FAIL: ".$sql_err);
@@ -35,12 +33,11 @@ if (count($data) > 0) {
   if ($monitorEnabled) {
     SendToMonitor($_REQUEST, $data);
     $end_time_milliseconds = round(microtime(true) * 1000);
-    // if ($REQUEST_SCHEMA != $OGD_SCHEMA) {
-    //   syslog(LOG_WARNING, "Warning: Got an old-logger data format");
-    // }
     }
 } else {
-  error_log("Didn't perform query, n_rows is <= 0");
+  $_msg = "Didn't perform query, data column was empty!";
+  error_log(_msg);
+  die(_msg);
 }
 die("SUCCESS: " . $query);
 ?>
