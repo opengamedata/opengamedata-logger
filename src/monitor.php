@@ -8,6 +8,8 @@
 function sendToMonitor($jsonPackage)
 {
     include('config.php');
+
+    $jsonPackage["ogd_logger_version"] = $loggerversion;
     $ch = curl_init('https://'.$monitorURL.'/log/event');
     $headers = array(
         'Content-Type: application/json',
