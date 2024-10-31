@@ -32,30 +32,30 @@ if (!$conn) {
 $data = json_decode(base64_decode($_POST["data"]));
 $data = dataToArray($data);
 
-# 4. Send the query itself. Log errors if failed.
 if (count($data) > 0) {
+  # 4. Send the query itself. Log errors if failed.
   $query = generateQueryString($REQUEST_SCHEMA, $APP_ID, $data, $conn);
   $result = mysqli_query($conn, $query);
   if ($result) {
-    if ($monitorEnabled) {
-# 5. Make flask monitor connection after connecting to db
-      $loggerData = combineParamsAndBody($_REQUEST, $data[0]);
-      $start_time_milliseconds = round(microtime(true) * 1000);
-      // syslog(LOG_NOTICE, "Sending data to monitor, beforeTime:".$start_time_milliseconds);
-      // error_log("Repeat message with error_log: Sending data to monitor, beforeTime:".$start_time_milliseconds);
-      sendToMonitor($loggerData);
-      $end_time_milliseconds = round(microtime(true) * 1000);
-      // syslog(LOG_NOTICE, "Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
-      // error_log("Repeat message with error_log: Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
-      // if ($REQUEST_SCHEMA != $OGD_SCHEMA) {
-      //   syslog(LOG_WARNING, "Warning: Got an old-logger data format");
-      // }
-    }
+    // syslog(LOG_NOTICE, "Successfully inserted event(s) to database");
   } else {
     $sql_err = "Query for ".$APP_ID." failed with error: ".mysqli_error($conn);
     error_log($sql_err);
     die("FAIL: ".$sql_err);
   }
+  # 5. Send event to flask monitor after sending to db
+  if ($monitorEnabled) {
+    $start_time_milliseconds = round(microtime(true) * 1000);
+    // syslog(LOG_NOTICE, "Sending data to monitor, beforeTime:".$start_time_milliseconds);
+    // error_log("Repeat message with error_log: Sending data to monitor, beforeTime:".$start_time_milliseconds);
+    sendToMonitor($_REQUEST, $data);
+    $end_time_milliseconds = round(microtime(true) * 1000);
+    // syslog(LOG_NOTICE, "Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
+    // error_log("Repeat message with error_log: Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
+    // if ($REQUEST_SCHEMA != $OGD_SCHEMA) {
+    //   syslog(LOG_WARNING, "Warning: Got an old-logger data format");
+    // }
+    }
 } else {
   error_log("Didn't perform query, n_rows is <= 0");
 }
