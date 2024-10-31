@@ -72,7 +72,7 @@ jobs:
 
   # 4. Cleanup & complete
     - name: Announce deploy
-      run: echo "Deployed to ${{ env.DEPLOY_URL }}"
+      run: echo "Deployed ${{ github.ref }} to ${{ env.DEPLOY_URL }}"
     - name: Upload logs as artifacts
       uses: actions/upload-artifact@v3
       with:
