@@ -10,7 +10,6 @@ $REQUEST_SCHEMA = $OGD_SCHEMA;
 $APP_ID = "NO APP ID";
 if (isset($_REQUEST["app_id"])) {
   $APP_ID = strtoupper($_REQUEST["app_id"]);
-  // error_log("The app id in upper-case is: ".$upper);
   $logger_games = array("BACTERIA",   "BALLOON",  "CRYSTAL",    "CYCLE_CARBON", "CYCLE_NITROGEN", "CYCLE_WATER",
                         "EARTHQUAKE", "JOWILDER", "LAKELAND",   "MAGNET",       "WAVES",          "WIND");
   $ogd_games    = array("AQUALAB",    "BLOOM",    "ICECUBE",    "JOURNALISM",   "MASHOPOLIS",     "PENGUINS",
@@ -35,11 +34,7 @@ if (!$conn) {
  * @var array
  */
 $data = json_decode(base64_decode($_POST["data"]));
-if (!is_array($data)) {
-  $d = $data;
-  $data = array();
-  array_push($data, $d);
-}
+$data = dataToArray($data);
 
 # 4. Send the query itself. Log errors if failed.
 if (count($data) > 0) {
