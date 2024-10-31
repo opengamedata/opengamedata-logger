@@ -1,5 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+$loggerversion = "placeholder version";
 
 $servername = "127.0.0.1";
 $username = "user placeholder";
