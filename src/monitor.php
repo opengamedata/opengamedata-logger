@@ -12,6 +12,8 @@ function SendToMonitor($request, $data_array)
     // error_log("Repeat message with error_log: Sending data to monitor, beforeTime:".$start_time_milliseconds);
     $jsonPackage = combineParamsAndBody($request, $data_array[0]);
     include('config.php');
+
+    $jsonPackage["ogd_logger_version"] = $loggerversion;
     $ch = curl_init('https://'.$monitorURL.'/log/event');
     $headers = array(
         'Content-Type: application/json',
