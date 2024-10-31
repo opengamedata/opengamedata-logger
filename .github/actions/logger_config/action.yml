@@ -21,10 +21,14 @@ inputs:
     description: "Name of the database to use"
     required: false
     default: 'opengamedata'
+  version_name:
+    description: "Name of version to send from this instance of logger"
+    required: true
+    default: 'UNKNOWN VERSION'
   monitor_enabled:
     description: "Whether to enable sending messages to monitor API at all"
     required: false
-    default: true
+    default: 'true'
   monitor_url:
     description: "URL for the monitor API"
     required: true
@@ -51,6 +55,9 @@ runs:
       shell: bash
     - name: Set DB name
       run: sed -i 's@db placeholder@${{ inputs.db_name }}@g' src/config.php
+      shell: bash
+    - name: Set version name
+      run: sed -i 's@version placeholder@${{ inputs.version_name }}@g' src/config.php
       shell: bash
     - name: Enable/disable monitor API
       run: sed -i 's@monitorEnabled = true@monitorEnabled = ${{inputs.monitor_enabled}}@g' src/config.php
