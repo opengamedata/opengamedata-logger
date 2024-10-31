@@ -5,8 +5,12 @@
 
 // connect to flask app with flask api url
 // send json package to flask app
-function sendToMonitor($jsonPackage)
+function SendToMonitor($request, $data_array)
 {
+    $start_time_milliseconds = round(microtime(true) * 1000);
+    // syslog(LOG_NOTICE, "Sending data to monitor, beforeTime:".$start_time_milliseconds);
+    // error_log("Repeat message with error_log: Sending data to monitor, beforeTime:".$start_time_milliseconds);
+    $jsonPackage = combineParamsAndBody($request, $data_array[0]);
     include('config.php');
     $ch = curl_init('https://'.$monitorURL.'/log/event');
     $headers = array(
@@ -35,6 +39,8 @@ function sendToMonitor($jsonPackage)
 
     // close cURL session
     curl_close($ch);
+    // syslog(LOG_NOTICE, "Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
+    // error_log("Repeat message with error_log: Sent data to monitor, timedelta:".($end_time_milliseconds - $start_time_milliseconds));
 }
 
 // given <parameter array from $_REQUEST> AND <body object from $data>
