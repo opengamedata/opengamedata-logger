@@ -6,7 +6,9 @@ include('config.php');
 include('parser.php');
 include('query_generator.php');
 include('monitor.php');
-$MESSAGE_BASE = "ogd-logger ".($loggerversion ?? "")." ";
+
+$RESPONSE_BASE = "ogd-logger ".($loggerversion ?? "")." ";
+
 # 1. Figure out what the input schema looks like, defaulting to full OGD schema.
 $APP_ID = $_REQUEST["app_id"] ?? "NO APP ID";
 $REQUEST_SCHEMA = schemaFromAppID($APP_ID);
@@ -14,7 +16,7 @@ $REQUEST_SCHEMA = schemaFromAppID($APP_ID);
 # 2. Make the db connection before we go to the trouble of generating query.
 $conn = mysqli_connect($servername, $username, $password, $db);
 if (!$conn) {
-  die($MESSAGE_BASE."FAILURE: Could not connect to the database.\n   Error message: " . mysqli_connect_error());
+  die($RESPONSE_BASE."FAILURE: Could not connect to the database.\n   Error message: " . mysqli_connect_error());
 }
 
 # 3. Generate the query data from raw input data.
@@ -28,7 +30,7 @@ if (count($data) > 0) {
   if (!$result) {
     $sql_err = "Query for ".$APP_ID." failed with error: ".mysqli_error($conn);
     error_log($sql_err);
-    die($MESSAGE_BASE."FAILURE: ".$sql_err);
+    die($RESPONSE_BASE."FAILURE: ".$sql_err);
   }
   # 5. Send event to flask monitor after sending to db
   if ($monitorEnabled) {
@@ -38,7 +40,7 @@ if (count($data) > 0) {
 } else {
   $_msg = "Didn't perform query, data column was empty!";
   error_log(_msg);
-  die($MESSAGE_BASE."FAILURE: "._msg);
+  die($RESPONSE_BASE."FAILURE: "._msg);
 }
-die($MESSAGE_BASE."SUCCESS: ".$query);
+die($RESPONSE_BASE."SUCCESS: ".$query);
 ?>
