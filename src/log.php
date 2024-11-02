@@ -13,7 +13,7 @@ $REQUEST_SCHEMA = schemaFromAppID($APP_ID);
 # 2. Make the db connection before we go to the trouble of generating query.
 $conn = mysqli_connect($servername, $username, $password, $db);
 if (!$conn) {
-  die("FAIL: Could not connect to the database.\nError message: " . mysqli_connect_error());
+  die("ogd-logger ".$loggerversion." FAILURE: "."Could not connect to the database.\n   Error message: " . mysqli_connect_error());
 }
 
 # 3. Generate the query data from raw input data.
@@ -27,7 +27,7 @@ if (count($data) > 0) {
   if (!$result) {
     $sql_err = "Query for ".$APP_ID." failed with error: ".mysqli_error($conn);
     error_log($sql_err);
-    die("FAIL: ".$sql_err);
+    die("ogd-logger ".$loggerversion." FAILURE: ".$sql_err);
   }
   # 5. Send event to flask monitor after sending to db
   if ($monitorEnabled) {
@@ -37,7 +37,7 @@ if (count($data) > 0) {
 } else {
   $_msg = "Didn't perform query, data column was empty!";
   error_log(_msg);
-  die(_msg);
+  die("ogd-logger ".$loggerversion." FAILURE: "._msg);
 }
-die("SUCCESS: " . $query);
+die("ogd-logger ".$loggerversion." SUCCESS: ".$query);
 ?>
